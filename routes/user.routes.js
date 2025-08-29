@@ -86,7 +86,11 @@ router.get("/:userId/boards", (req, res) => {
   }
 
   Board.find(filter)
-    .populate("assets")
+    .populate({
+      path: "assets",
+      options: { sort: { createdAt: -1 } },
+    })
+    .sort({ createdAt: -1 })
     .then((allBoards) => {
       res.status(200).json(allBoards);
     })
