@@ -3,10 +3,14 @@ const Asset = require("../models/Asset.model.js");
 const Board = require("../models/Board.model.js");
 // post a new asset
 router.post("/", async (req, res) => {
-  const { userId, boardId } = req.body;
+  const { assetType, content, boardId } = req.body;
+
+  if (!assetType) throw new Error("No asset.assetType");
+  if (!content) throw new Error("No asset.content"); 
 
   try {
     const createdAsset = await Asset.create(req.body);
+
     await Board.findByIdAndUpdate(boardId, {
       $push: { assets: createdAsset._id },
     });
