@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const Asset = require("../models/Asset.model.js");
 const Board = require("../models/Board.model.js");
+
 // post a new asset
 router.post("/", async (req, res) => {
-  const { assetType, content, boardId } = req.body;
+  const { type, content, boardId } = req.body;
 
-  if (!assetType) throw new Error("No asset.assetType");
+  if (!type) throw new Error("No asset.assetType");
   if (!content) throw new Error("No asset.content"); 
 
   try {
