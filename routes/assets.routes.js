@@ -35,9 +35,14 @@ router.get("/:assetId", (req, res) => {
     });
 });
 
-// redo a single asset
+// update a single asset
 router.put("/:assetId", (req, res) => {
   const { assetId } = req.params;
+  if (!assetId) throw new Error("No assetId provided")
+  console.log(req.body);
+
+  // if (!assetId) throw new Error("No asset.assetType");
+  // if (!content) throw new Error("No asset.content"); 
 
   Asset.findByIdAndUpdate(assetId, req.body)
     .then((updatedAsset) => {
@@ -49,7 +54,6 @@ router.put("/:assetId", (req, res) => {
 });
 
 // delete a single asset
-
 router.delete("/:assetId", async (req, res) => {
   const { assetId } = req.params;
   try {
