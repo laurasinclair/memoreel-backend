@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Asset = require("../models/Asset.model.js");
 const Board = require("../models/Board.model.js");
+const fileUploader = require("../config/cloudinary.config");
 
 // post a new asset
 router.post("/", async (req, res) => {
@@ -68,6 +69,14 @@ router.delete("/:assetId", async (req, res) => {
     console.error("Error deleting asset:", error);
     res.status(500).json({ error: "Failed to delete this asset" });
   }
+});
+
+router.post("/upload", fileUploader.single("file"), (req, res, next) => {
+	if (!req.file) {
+		next(new Error("No file uploaded!"));
+		return;
+	}
+	res.json({ fileUrl: req.file.path });
 });
 
 module.exports = router;
