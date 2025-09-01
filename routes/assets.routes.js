@@ -38,15 +38,19 @@ router.get("/:assetId", (req, res) => {
 
 // update a single asset
 router.put("/:assetId", (req, res) => {
+  console.log(req.body)
   const { assetId } = req.params;
-  if (!assetId) throw new Error("No assetId provided")
+  if (!assetId)
+    return res.status(400).json({ message: "No assetId provided" });
+  if (!req.body.content || !req.body.content.length)
+		return res.status(400).json({ message: "No asset content provided" });
 
   Asset.findByIdAndUpdate(assetId, req.body)
     .then((updatedAsset) => {
       res.status(200).json(updatedAsset);
     })
     .catch((error) => {
-      res.status(500).json({ error: "Failed to update this asset" });
+      res.status(500).json(error);
     });
 });
 
@@ -67,7 +71,7 @@ router.delete("/:assetId", async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error("Error deleting asset:", error);
-    res.status(500).json({ error: "Failed to delete this asset" });
+      res.status(500).json({ message: error });
   }
 });
 
