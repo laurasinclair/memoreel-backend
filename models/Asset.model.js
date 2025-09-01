@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const assetSchema = new Schema({
   type: {
     type: String,
-    enum: ["text", "youtubeURL", "image", "camImage", "audio"],
+    enum: ["text", "youtubeURL", "image", "webcamImage", "audio"],
   },
   content: String,
   boardId: {
