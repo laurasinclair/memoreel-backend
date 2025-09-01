@@ -39,10 +39,6 @@ router.get("/:assetId", (req, res) => {
 router.put("/:assetId", (req, res) => {
   const { assetId } = req.params;
   if (!assetId) throw new Error("No assetId provided")
-  console.log(req.body);
-
-  // if (!assetId) throw new Error("No asset.assetType");
-  // if (!content) throw new Error("No asset.content"); 
 
   Asset.findByIdAndUpdate(assetId, req.body)
     .then((updatedAsset) => {
