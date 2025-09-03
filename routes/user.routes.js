@@ -39,13 +39,20 @@ router.put("/:userId", (req, res) => {
           user.email = req.body.email;
         }
         if (req.body.password != null) {
-          user.password = req.body.password;
-        }
+				user.password = req.body.password;
+			}
+        if (req.body.displayName != null) {
+				user.displayName = req.body.displayName;
+			}
+        if (req.body.profileImg != null) {
+				user.profileImg = req.body.profileImg;
+			}
 
         user
           .save()
           .then((updatedUser) => {
-            res.json(updatedUser);
+            const { _id, name, email, displayName, profileImg } = updatedUser;
+            res.json({ _id, name, email, displayName, profileImg });
           })
           .catch((error) => {
             res.status(400).json({ message: error.message });
